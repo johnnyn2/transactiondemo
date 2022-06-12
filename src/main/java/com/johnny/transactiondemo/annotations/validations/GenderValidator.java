@@ -5,9 +5,9 @@ import javax.validation.ConstraintValidatorContext;
 
 import com.johnny.transactiondemo.enumerations.Gender;
 
-public class GenderValidator implements ConstraintValidator<GenderValidation, String>{
+public class GenderValidator implements ConstraintValidator<GenderConstraint, String>{
     @Override
-    public void initialize(GenderValidation gender) {
+    public void initialize(GenderConstraint gender) {
     }
     @Override
     public boolean isValid(String gender, ConstraintValidatorContext cxt) {

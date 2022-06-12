@@ -4,7 +4,7 @@ import javax.validation.GroupSequence;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.johnny.transactiondemo.annotations.validations.GenderValidation;
+import com.johnny.transactiondemo.annotations.validations.GenderConstraint;
 import com.johnny.transactiondemo.model.Author;
 import com.johnny.transactiondemo.sequence.FirstOrder;
 import com.johnny.transactiondemo.sequence.SecondOrder;
@@ -26,7 +26,7 @@ public class AddAuthorRequest {
     private String lastName;
     
     @NotBlank(message = Constants.AUTHOR_GENDER_REQUIRED, groups = FirstOrder.class)
-    @GenderValidation(groups = SecondOrder.class)
+    @GenderConstraint(groups = SecondOrder.class)
     private String gender;
 
     @JsonIgnore

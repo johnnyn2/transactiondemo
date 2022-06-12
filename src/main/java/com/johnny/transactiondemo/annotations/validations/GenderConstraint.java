@@ -12,7 +12,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Constraint(validatedBy = GenderValidator.class)
-public @interface GenderValidation {
+public @interface GenderConstraint {
     // error message
     public String message() default "Invalid gender: must be M or F";
     //represents group of constraints
