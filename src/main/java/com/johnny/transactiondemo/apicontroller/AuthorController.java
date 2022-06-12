@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.johnny.transactiondemo.model.Author;
+import com.johnny.transactiondemo.model.request.AddAuthorRequest;
+import com.johnny.transactiondemo.model.response.AuthorAndPostResponse;
+import com.johnny.transactiondemo.model.response.AuthorResponse;
 import com.johnny.transactiondemo.request.AuthorAndPost;
 import com.johnny.transactiondemo.response.ApiResponse;
 import com.johnny.transactiondemo.service.AuthorService;
@@ -26,12 +29,13 @@ public class AuthorController {
     private AuthorService authorService;
     
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> addAuthor(@Valid @RequestBody(required = true) Author author) {
+    public ResponseEntity<ApiResponse> addAuthor(@Valid @RequestBody(required = true) AddAuthorRequest author) {
         try {
             Author newAuthor = authorService.addAuthor(author);
+            AuthorResponse authorRes = new AuthorResponse(newAuthor);
             ApiResponse res = ApiResponse.builder()
                 .message("success")
-                .data(newAuthor)
+                .data(authorRes)
                 .build();
             return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
@@ -49,7 +53,7 @@ public class AuthorController {
     @PostMapping("/addAuthorAndPost")
     public ResponseEntity<ApiResponse> addAuthorAndPost(@Valid @RequestBody(required = true) AuthorAndPost authorAndPost) {
         try {
-            AuthorAndPost newAuthorAndPost = authorService.addAuthorAndPost(authorAndPost);
+            AuthorAndPostResponse newAuthorAndPost = authorService.addAuthorAndPost(authorAndPost);
             ApiResponse res = ApiResponse.builder()
                 .message("success")
                 .data(newAuthorAndPost)

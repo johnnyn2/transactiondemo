@@ -21,7 +21,6 @@ import com.johnny.transactiondemo.model.request.EditPostRequest;
 import com.johnny.transactiondemo.model.response.PostResponse;
 import com.johnny.transactiondemo.response.ApiResponse;
 import com.johnny.transactiondemo.service.PostService;
-import com.johnny.transactiondemo.util.Helper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,13 +37,7 @@ public class PostController {
             List<Post> posts = postService.findAll();
             List<PostResponse> postList = posts
                 .stream()
-                .map(p -> PostResponse
-                    .builder()
-                    .title(p.getTitle())
-                    .content(p.getContent())
-                    .createdAt(p.getCreateAt())
-                    .authorName(Helper.getAuthorFullName(p.getAuthor()))
-                    .build())
+                .map(p -> new PostResponse(p))
                 .collect(Collectors.toList());
             ApiResponse res = ApiResponse.builder()
                 .message("success")
@@ -66,13 +59,7 @@ public class PostController {
     public ResponseEntity<ApiResponse> addPost(@Valid @RequestBody(required = true) AddPostRequest post) {
         try {
             Post newPost = postService.addPost(post);
-            PostResponse addPostResponse = PostResponse.builder()
-                .title(newPost.getTitle())
-                .content(newPost.getContent())
-                .createdAt(newPost.getCreateAt())
-                .updatedAt(newPost.getUpdatedAt())
-                .authorName(Helper.getAuthorFullName(newPost.getAuthor()))
-                .build();
+            PostResponse addPostResponse = new PostResponse(newPost);
             ApiResponse res = ApiResponse.builder()
                 .message("success")
                 .data(addPostResponse)
@@ -94,14 +81,7 @@ public class PostController {
     public ResponseEntity<ApiResponse> updatePost(@Valid @RequestBody(required = true) EditPostRequest post) {
         try {
             Post updatedPost = postService.updatePost(post);
-            PostResponse updatedPostResponse = PostResponse
-                .builder()
-                .title(updatedPost.getTitle())
-                .content(updatedPost.getContent())
-                .createdAt(updatedPost.getCreateAt())
-                .updatedAt(updatedPost.getUpdatedAt())
-                .authorName(Helper.getAuthorFullName(updatedPost.getAuthor()))
-                .build();
+            PostResponse updatedPostResponse = new PostResponse(updatedPost);
             ApiResponse res = ApiResponse.builder()
                 .message("success")
                 .data(updatedPostResponse)
