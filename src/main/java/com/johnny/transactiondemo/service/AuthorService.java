@@ -34,14 +34,16 @@ public class AuthorService {
     }
 
     @Transactional
-    public AuthorAndPostResponse addAuthorAndPost(AuthorAndPost authorAndPost) {
+    public AuthorAndPostResponse addAuthorAndPost(AuthorAndPost authorAndPost) throws Exception{
         Author author = authorAndPost.getAuthor().createAuthor();
-        Author newAuthor = authorRepository.save(author);
-        // var x = 1/0;
+        Author newAuthor = authorRepository.save(author); // newAuthor will be rollback
         // an unchecked exception to test transaction rollback.
         // test result: we should not use try catch block in @transactional method.
         // using try catch block in @transactional method would block spring boot from rollback
         // We should use try catch in controller level 
+        if (author.getFirstName().equals("Kitty")) {
+            throw new RuntimeException();
+        }
         Post post = authorAndPost.getPost().createPostWithoutAuthor();
         post.setAuthor(newAuthor);
         Post newPost = postRepository.save(post);
