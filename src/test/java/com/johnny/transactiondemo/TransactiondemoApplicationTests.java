@@ -8,6 +8,7 @@ class TransactiondemoApplicationTests {
 
 	@Test
 	void contextLoads() {
+		TransactiondemoApplication.main(new String[] {});
 	}
 
 }
