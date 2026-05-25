@@ -28,9 +28,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/post")
 @Slf4j
 public class PostController {
-    @Autowired
-    private PostService postService;
-    
+    private final PostService postService;
+
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
+
     @GetMapping("/list")
     public ResponseEntity<ApiResponse> getPosts(@RequestParam(required = true) int page) {
         try {

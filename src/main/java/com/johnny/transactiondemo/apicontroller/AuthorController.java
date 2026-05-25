@@ -25,9 +25,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/author")
 @Slf4j
 public class AuthorController {
-    @Autowired
-    private AuthorService authorService;
-    
+    private final AuthorService authorService;
+
+    public AuthorController(AuthorService authorService) {
+        this.authorService = authorService;
+    }
+
     @PostMapping("/add")
     public ResponseEntity<ApiResponse> addAuthor(@Valid @RequestBody(required = true) AddAuthorRequest author) {
         try {

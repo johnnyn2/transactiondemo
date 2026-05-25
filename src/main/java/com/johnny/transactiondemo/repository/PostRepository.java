@@ -14,8 +14,8 @@ import com.johnny.transactiondemo.model.Post;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long>{
-    @Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
-    public <S extends Post> S save(Post post);
+//    @Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
+//    public <S extends Post> S save(Post post);
     
     @Lock(LockModeType.OPTIMISTIC)
     public  Optional<Post> findById(Long id);

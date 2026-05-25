@@ -18,10 +18,14 @@ import com.johnny.transactiondemo.request.AuthorAndPost;
 
 @Service
 public class AuthorService {
+    private final AuthorRepository authorRepository;
+    private final PostRepository postRepository;
+
     @Autowired
-    private AuthorRepository authorRepository;
-    @Autowired
-    private PostRepository postRepository;
+    public AuthorService(AuthorRepository authorRepository, PostRepository postRepository) {
+        this.authorRepository = authorRepository;
+        this.postRepository = postRepository;
+    }
 
     @Transactional
     public Author addAuthor(AddAuthorRequest author) {

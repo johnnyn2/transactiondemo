@@ -19,12 +19,16 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class PostService {
-    @Autowired
-    private AuthorRepository authorRepository;
+    private final AuthorRepository authorRepository;
+
+    private final PostRepository postRepository;
 
     @Autowired
-    private PostRepository postRepository;
-    
+    public PostService(AuthorRepository authorRepository, PostRepository postRepository) {
+        this.authorRepository = authorRepository;
+        this.postRepository = postRepository;
+    }
+
     public List<Post> findAll() {
         return postRepository.findAll();
     }
